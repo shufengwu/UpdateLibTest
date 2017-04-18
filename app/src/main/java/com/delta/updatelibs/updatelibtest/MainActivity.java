@@ -1,7 +1,10 @@
 package com.delta.updatelibs.updatelibtest;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -11,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.delta.updatelibs.Info;
+import com.delta.updatelibs.UpdateUtils;
 import com.delta.updatelibs.updatelibtest.app.MyApp;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,17 +31,16 @@ public class MainActivity extends AppCompatActivity {
             //申请WRITE_EXTERNAL_STORAGE权限
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
         } else {
-            //Info.checkUpdateInfo(this, (MyApp)getApplication(),"delta.base_update_lib.fileprovider",0);
-            ((MyApp)getApplication()).check(this.getPackageName()+".fileprovider",0);
+            UpdateUtils.checkUpdateInfo(getApplication(),this.getPackageName()+".fileprovider",0);
         }
         check = (Button)findViewById(R.id.checkUpdate);
         check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Info.checkUpdateInfo(MainActivity.this, (MyApp)getApplication(),"delta.base_update_lib.fileprovider",1);
-                ((MyApp)getApplication()).check(MainActivity.this.getPackageName()+".fileprovider",1);
+                UpdateUtils.checkUpdateInfo(getApplication(),MainActivity.this.getPackageName()+".fileprovider",1);
             }
         });
+
     }
 
     //运行时权限请求回调方法
@@ -48,9 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 //如果权限请求通过
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    //Info.checkUpdateInfo(this, (MyApp)getApplication(),"delta.base_update_lib.fileprovider",0);
-                    ((MyApp)getApplication()).check(MainActivity.this.getPackageName()+".fileprovider",0);
-                    //如果权限请求不通过
+                    UpdateUtils.checkUpdateInfo(getApplication(),MainActivity.this.getPackageName()+".fileprovider",0);
                 } else {
                 }
             }

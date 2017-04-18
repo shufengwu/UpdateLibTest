@@ -26,7 +26,7 @@ public class MyApp extends /*UpdateBaseApplication */Application{
         UpdateUtils.init("http://172.22.35.177:8081/");
     }
 
-    public void check(String authority,int label){
+    /*public void check(String authority,int label){
         UpdateUtils.checkUpdateInfo(this,authority,label);
-    }
+    }*/
 }
