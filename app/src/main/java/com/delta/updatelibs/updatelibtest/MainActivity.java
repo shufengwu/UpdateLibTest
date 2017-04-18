@@ -28,14 +28,14 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
         } else {
             //Info.checkUpdateInfo(this, (MyApp)getApplication(),"delta.base_update_lib.fileprovider",0);
-            ((MyApp)getApplication()).check("delta.base_update_lib.fileprovider",0);
+            ((MyApp)getApplication()).check(this.getPackageName()+".fileprovider",0);
         }
         check = (Button)findViewById(R.id.checkUpdate);
         check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Info.checkUpdateInfo(MainActivity.this, (MyApp)getApplication(),"delta.base_update_lib.fileprovider",1);
-                ((MyApp)getApplication()).check("delta.base_update_lib.fileprovider",1);
+                ((MyApp)getApplication()).check(MainActivity.this.getPackageName()+".fileprovider",1);
             }
         });
     }
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //Info.checkUpdateInfo(this, (MyApp)getApplication(),"delta.base_update_lib.fileprovider",0);
-                    ((MyApp)getApplication()).check("delta.base_update_lib.fileprovider",0);
+                    ((MyApp)getApplication()).check(MainActivity.this.getPackageName()+".fileprovider",0);
                     //如果权限请求不通过
                 } else {
                 }

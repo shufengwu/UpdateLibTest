@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
         <provider
-            android:authorities="delta.base_update_lib.fileprovider"
+            android:authorities="${applicationId}.fileprovider"
             android:name="android.support.v4.content.FileProvider"
             android:grantUriPermissions="true"
             android:exported="false">
