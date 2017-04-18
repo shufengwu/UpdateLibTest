@@ -23,7 +23,7 @@ public class MyApp extends /*UpdateBaseApplication */Application{
     @Override
     public void onCreate() {
         super.onCreate();
-        UpdateUtils.init();
+        UpdateUtils.init("http://172.22.35.177:8081/");
     }
 
     public void check(String authority,int label){

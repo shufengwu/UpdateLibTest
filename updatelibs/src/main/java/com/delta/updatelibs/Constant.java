@@ -10,12 +10,12 @@ package com.delta.updatelibs;
 public class Constant {
 
     //更新配置文件update.json url
-    public static final String bundleJsonUrl = "http://172.22.35.177:8081/update.json";
+    public static final String bundleJsonUrl = "update.json";
 
     //更新状态
     public static final String MESSAGE_PROGRESS = "message_progress";
     public static final String MESSAGE_DIALOG_DISMISS = "message_dialog_dismiss";
     public static final String MESSAGE_FAILED = "message_failed";
 
-    public static final String BASE_UPDATE_URL = "http://172.22.35.177:8081/";
+    public static String BASE_UPDATE_URL = "";
 }

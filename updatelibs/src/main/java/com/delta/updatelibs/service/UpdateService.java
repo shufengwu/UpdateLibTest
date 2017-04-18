@@ -15,6 +15,7 @@ import rx.Observable;
  */
 
 public interface UpdateService {
+
     //更新
     @GET(Constant.bundleJsonUrl)
     Call<Update> getUpdate();

@@ -52,7 +52,8 @@ public class UpdateUtils {
 
     public static final String TAG = "UpdateUtils";
 
-    public static void init(){
+    public static void init(String base_url){
+        Constant.BASE_UPDATE_URL = base_url;
         retrofitUpdateInfo = new Retrofit.Builder()
                 .baseUrl(Constant.BASE_UPDATE_URL)//域名
                 .client(new OkHttpClient.Builder()
