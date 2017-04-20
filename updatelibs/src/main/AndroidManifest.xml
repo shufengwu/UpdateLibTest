@@ -33,6 +33,11 @@
             android:name=".ui.dialog.NetFailedDialog"
             android:label="提示"
             android:theme="@style/Theme.AppCompat.DayNight.Dialog.Alert" />
+        <activity
+            android:name=".ui.dialog.NoNewDialog"
+            android:label="提示"
+            android:theme="@style/Theme.AppCompat.DayNight.Dialog.Alert" />
+
 
     </application>
 

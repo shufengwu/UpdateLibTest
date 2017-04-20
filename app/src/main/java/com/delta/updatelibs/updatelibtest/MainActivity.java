@@ -28,16 +28,26 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-            //申请WRITE_EXTERNAL_STORAGE权限
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+            //城区启动时申请WRITE_EXTERNAL_STORAGE权限，设置requestPermissions方法参数requestCode
+            int requestCode = 5;
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestCode);
         } else {
-            UpdateUtils.checkUpdateInfo(getApplication(),this.getPackageName()+".fileprovider",0);
+            UpdateUtils.checkUpdateInfo(getApplication(), this.getPackageName() + ".fileprovider", 0);
         }
-        check = (Button)findViewById(R.id.checkUpdate);
+        check = (Button) findViewById(R.id.checkUpdate);
         check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UpdateUtils.checkUpdateInfo(getApplication(),MainActivity.this.getPackageName()+".fileprovider",1);
+
+                if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    //手动更新时申请WRITE_EXTERNAL_STORAGE权限，设置requestPermissions方法参数requestCode
+                    int requestCode = 6;
+                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestCode);
+                } else {
+                    UpdateUtils.checkUpdateInfo(getApplication(), MainActivity.this.getPackageName() + ".fileprovider", 1);
+                }
+
             }
         });
 
@@ -47,14 +57,26 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
-            case 0: {
+            //程序启动时请求WRITE_EXTERNAL_STORAGE权限对应回调
+            case 5:
                 //如果权限请求通过
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    UpdateUtils.checkUpdateInfo(getApplication(),MainActivity.this.getPackageName()+".fileprovider",0);
+                    //程序启动时检查更新，checkUpdateInfo方法第三个参数设置为0
+                    UpdateUtils.checkUpdateInfo(getApplication(), MainActivity.this.getPackageName() + ".fileprovider", 0);
                 } else {
                 }
-            }
+                break;
+            //手动检查更新时请求WRITE_EXTERNAL_STORAGE权限对应回调
+            case 6:
+                //如果权限请求通过
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //手动检查更新，checkUpdateInfo方法第三个参数设置为1
+                    UpdateUtils.checkUpdateInfo(getApplication(), MainActivity.this.getPackageName() + ".fileprovider", 1);
+                } else {
+                }
+                break;
         }
     }
 }

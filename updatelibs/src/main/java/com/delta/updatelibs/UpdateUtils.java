@@ -18,6 +18,7 @@ import com.delta.updatelibs.service.UpdateService;
 import com.delta.updatelibs.ui.dialog.DownloadProgressDialog;
 import com.delta.updatelibs.ui.dialog.ExistUpdateDialog;
 import com.delta.updatelibs.ui.dialog.NetFailedDialog;
+import com.delta.updatelibs.ui.dialog.NoNewDialog;
 import com.delta.updatelibs.ui.update.DownloadService;
 import com.delta.updatelibs.utils.PkgInfoUtils;
 import com.delta.updatelibs.utils.StringUtils;
@@ -162,7 +163,10 @@ public class UpdateUtils {
                 }else{
                     if(label==0){
                     }else if(label==1){
-                        Toast.makeText(mContext, "未发现新版本！", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(mContext, "未发现新版本！", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(mContext,NoNewDialog.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(intent);
                     }
                 }
             }
