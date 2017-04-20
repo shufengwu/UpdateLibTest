@@ -1,18 +1,9 @@
 package com.delta.updatelibs;
 
-import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.delta.updatelibs.base.UpdateBaseApplication;
-import com.delta.updatelibs.entity.Download;
 import com.delta.updatelibs.entity.Update;
 import com.delta.updatelibs.service.UpdateService;
 import com.delta.updatelibs.ui.dialog.DownloadProgressDialog;
@@ -21,7 +12,6 @@ import com.delta.updatelibs.ui.dialog.NetFailedDialog;
 import com.delta.updatelibs.ui.dialog.NoNewDialog;
 import com.delta.updatelibs.ui.update.DownloadService;
 import com.delta.updatelibs.utils.PkgInfoUtils;
-import com.delta.updatelibs.utils.StringUtils;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -40,18 +30,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UpdateUtils {
 
-    private static String downloadStr = null;
-    private static Context mContext;
-
+    public static final String TAG = "UpdateUtils";
     private static final int TOME_OUT = 10;
-    private static Retrofit retrofitUpdateInfo;
-    private static UpdateService updateInfoService;
     private static final Map<String, String> mapUpdateInfo = new HashMap<>();
-
     static Update update = null;
     static String finalAuthority;
-
-    public static final String TAG = "UpdateUtils";
+    private static String downloadStr = null;
+    private static Context mContext;
+    private static Retrofit retrofitUpdateInfo;
+    private static UpdateService updateInfoService;
 
     public static void init(String base_url){
         Constant.BASE_UPDATE_URL = base_url;
@@ -81,6 +68,8 @@ public class UpdateUtils {
                     mapUpdateInfo.put("versionCode", "0");
                     mapUpdateInfo.put("description", "");
                     mapUpdateInfo.put("url", "");
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
                 }
             }
         }.start();
@@ -117,6 +106,8 @@ public class UpdateUtils {
                     mapUpdateInfo.put("versionCode", "0");
                     mapUpdateInfo.put("description", "");
                     mapUpdateInfo.put("url", "");
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
                 }
 
                 getUpdateInfo(mContext, authority, label);
