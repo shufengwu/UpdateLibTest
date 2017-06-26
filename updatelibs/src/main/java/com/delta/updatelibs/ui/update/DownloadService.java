@@ -10,15 +10,18 @@ import android.os.Environment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.content.LocalBroadcastManager;
+
 import com.delta.updatelibs.Constant;
 import com.delta.updatelibs.entity.Download;
 import com.delta.updatelibs.service.UpdateService;
 import com.delta.updatelibs.utils.FileUtils;
 import com.delta.updatelibs.utils.StringUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
@@ -35,18 +38,34 @@ import rx.schedulers.Schedulers;
  */
 
 public class DownloadService extends IntentService {
+    public static boolean isUpdating = false;
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      */
     int downloadCount = 0;
+    Download download;
+    //@Inject
+    UpdateService updateService;
     private String urlStrl;
     private String authority;
     private NotificationCompat.Builder notificationBuilder;
     private NotificationManager notificationManager;
-    Download download;
-    //@Inject
-    UpdateService updateService;
-    public static boolean isUpdating = false;
+    DownloadProgressInterceptor interceptor = new DownloadProgressInterceptor(new DownloadProgressListener() {
+        @Override
+        public void update(long bytesRead, long contentLength, boolean done) {
+            //不频繁发送通知，防止通知栏下拉卡顿
+            int progress = (int) ((bytesRead * 100) / contentLength);
+            if ((downloadCount == 0) || progress > downloadCount) {
+                downloadCount += 1;
+                download = new Download();
+                download.setTotalFileSize(contentLength);
+                download.setCurrentFileSize(bytesRead);
+                download.setProgress(progress);
+
+                sendNotification(download);
+            }
+        }
+    });
 
     public DownloadService() {
         super("DownloadService");
@@ -85,23 +104,6 @@ public class DownloadService extends IntentService {
         download();
 
     }
-
-    DownloadProgressInterceptor interceptor = new DownloadProgressInterceptor(new DownloadProgressListener() {
-        @Override
-        public void update(long bytesRead, long contentLength, boolean done) {
-            //不频繁发送通知，防止通知栏下拉卡顿
-            int progress = (int) ((bytesRead * 100) / contentLength);
-            if ((downloadCount == 0) || progress > downloadCount) {
-                downloadCount +=1;
-                download = new Download();
-                download.setTotalFileSize(contentLength);
-                download.setCurrentFileSize(bytesRead);
-                download.setProgress(progress);
-
-                sendNotification(download);
-            }
-        }
-    });
 
     private void sendIntent(Download download) {
 

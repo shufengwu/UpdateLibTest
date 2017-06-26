@@ -133,7 +133,7 @@ public class UpdateUtils {
     }
 
     public static void openCheckDialog(Context mContext, String authority, int label){
-        try{
+        //try{
             if("网络请求失败！".equals(update.getVersion())){
                 if(label==1){
                     Log.i(TAG, "openCheckDialog: "+"网络请求失败！");
@@ -143,28 +143,38 @@ public class UpdateUtils {
 
                 }
             }else{
-                if(Integer.parseInt(update.getVersionCode())> PkgInfoUtils.getVersionCode(mContext)){
-                    Update finalUpdate = update;
-                    finalAuthority = authority;
-                    Intent intent = new Intent(mContext, ExistUpdateDialog.class);
-                    intent.putExtra("update_title","发现新版本 "+finalUpdate.getVersion());
-                    intent.putExtra("update_content",finalUpdate.getDescription());
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    mContext.startActivity(intent);
-                }else{
-                    if(label==0){
-                    }else if(label==1){
+                if (update.getVersionCode() != null) {
+                    if (Integer.parseInt(update.getVersionCode()) > PkgInfoUtils.getVersionCode(mContext)) {
+                        Update finalUpdate = update;
+                        finalAuthority = authority;
+                        Intent intent = new Intent(mContext, ExistUpdateDialog.class);
+                        intent.putExtra("update_title", "发现新版本 " + finalUpdate.getVersion());
+                        intent.putExtra("update_content", finalUpdate.getDescription());
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(intent);
+                    } else {
+                        if (label == 0) {
+                        } else if (label == 1) {
+                            //Toast.makeText(mContext, "未发现新版本！", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(mContext, NoNewDialog.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            mContext.startActivity(intent);
+                        }
+                    }
+                } else {
+                    if (label == 1) {
                         //Toast.makeText(mContext, "未发现新版本！", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(mContext,NoNewDialog.class);
+                        Intent intent = new Intent(mContext, NoNewDialog.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         mContext.startActivity(intent);
                     }
                 }
+
             }
 
-        }catch (Exception e){
+        /*}catch (Exception e){
             e.printStackTrace();
-        }
+        }*/
     }
 
     public static void checkUpdateInfo(Context mContext, String authority, int label){

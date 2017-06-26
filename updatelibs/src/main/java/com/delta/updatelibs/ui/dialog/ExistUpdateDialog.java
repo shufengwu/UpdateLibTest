@@ -1,6 +1,5 @@
 package com.delta.updatelibs.ui.dialog;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -9,14 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.delta.updatelibs.R;
 import com.delta.updatelibs.UpdateUtils;
-import com.delta.updatelibs.entity.Update;
 
 /**
  * Created by Shufeng.Wu on 2017/4/10.
@@ -28,6 +25,7 @@ public class ExistUpdateDialog extends AppCompatActivity implements View.OnClick
     TextView content;
     Button cancel;
     Button ok;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +45,7 @@ public class ExistUpdateDialog extends AppCompatActivity implements View.OnClick
         //设置Dialog宽高
         android.view.WindowManager.LayoutParams p = getWindow().getAttributes();
         //p.height = (int) (height * 0.5); // 高度设置为屏幕的0.3
-        p.width = (int) (width); // 宽度设置为屏幕的0.7
+        p.width = width; // 宽度设置为屏幕的0.7
         getWindow().setAttributes(p);
 
 

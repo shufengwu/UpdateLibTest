@@ -11,7 +11,6 @@ import android.widget.Button;
 
 import com.delta.updatelibs.R;
 import com.delta.updatelibs.UpdateUtils;
-import com.delta.updatelibs.entity.Update;
 
 /**
  * Created by Shufeng.Wu on 2017/4/11.
@@ -38,7 +37,7 @@ public class RetryDialog extends AppCompatActivity implements View.OnClickListen
         //设置Dialog宽高
         android.view.WindowManager.LayoutParams p = getWindow().getAttributes();
         //p.height = (int) (height * 0.5); // 高度设置为屏幕的0.3
-        p.width = (int) (width); // 宽度设置为屏幕的0.7
+        p.width = width; // 宽度设置为屏幕的0.7
         getWindow().setAttributes(p);
 
         retry = (Button)this.findViewById(R.id.ok);
