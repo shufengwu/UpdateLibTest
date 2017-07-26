@@ -6,7 +6,7 @@
 {
 	"version": "0.3", 
 	"versionCode": "5",
-	"url": "http://172.22.34.198:8809/mobile/Release/app-debug.apk", 
+	"url": "http://（IP+端口号）/mobile/Release/app-debug.apk", 
 	"description": "1.修复部分bug"
 }
 ```
@@ -56,7 +56,7 @@ dependencies {
 UpdateUtils.init(url);
 
 ```
-例如，update文件在服务器的地址为"http://172.22.35.177:8081/update.json",那么参数url就设置为"http://172.22.35.177:8081/"
+例如，update文件在服务器的地址为"http://（IP+端口号）/update.json",那么参数url就设置为"http://（IP+端口号）/"
 
 4. **检查更新**
 
